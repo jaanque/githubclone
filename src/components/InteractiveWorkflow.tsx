@@ -52,7 +52,8 @@ export default function InteractiveWorkflow() {
           start: "top top+=50",
           end: "bottom bottom-=50",
           pin: ".visual-container",
-          scrub: 0.5, // Smoother scrubbing
+          pinSpacing: false, // Disabling pinSpacing often fixes flex layout issues
+          scrub: 0.5,
         }
       });
 
