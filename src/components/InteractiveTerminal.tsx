@@ -100,7 +100,6 @@ const InteractiveTerminal = () => {
                 onKeyDown={handleCommand}
                 className="bg-transparent border-none outline-none text-white w-full cursor-text"
                 autoComplete="off"
-                autoFocus
               />
             </div>
             <div ref={bottomRef}></div>
