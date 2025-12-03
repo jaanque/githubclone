@@ -7,34 +7,34 @@ gsap.registerPlugin(ScrollTrigger);
 
 const features = [
   {
-    icon: <GitBranch className="w-8 h-8 text-blue-400" />,
-    title: "Control de Versions",
-    description: "Brancat, fusions i revisions de codi sense esforç. Mantén l'historial del teu projecte net i accessible."
+    icon: <GitBranch className="w-6 h-6 text-blue-600" />,
+    title: "Control de Versiones",
+    description: "Ramas, fusiones y revisiones de código sin esfuerzo. Mantén el historial de tu proyecto limpio y accesible."
   },
   {
-    icon: <Database className="w-8 h-8 text-purple-400" />,
-    title: "Allotjament de Codi",
-    description: "Repositoris il·limitats per a tots els teus projectes, des de petits scripts fins a grans aplicacions empresarials."
+    icon: <Database className="w-6 h-6 text-purple-600" />,
+    title: "Alojamiento de Código",
+    description: "Repositorios ilimitados para todos tus proyectos, desde pequeños scripts hasta grandes aplicaciones empresariales."
   },
   {
-    icon: <ShieldCheck className="w-8 h-8 text-green-400" />,
-    title: "Seguretat Avançada",
-    description: "Escaneig de vulnerabilitats automàtic i gestió de secrets per protegir el teu codi des del primer dia."
+    icon: <ShieldCheck className="w-6 h-6 text-green-600" />,
+    title: "Seguridad Avanzada",
+    description: "Escaneo de vulnerabilidades automático y gestión de secretos para proteger tu código desde el primer día."
   },
   {
-    icon: <Terminal className="w-8 h-8 text-orange-400" />,
-    title: "Línia de Comandes",
-    description: "Integra't perfectament amb la teva terminal preferida. Puja i baixa codi amb comandes senzilles."
+    icon: <Terminal className="w-6 h-6 text-orange-600" />,
+    title: "Línea de Comandos",
+    description: "Intégrate perfectamente con tu terminal preferida. Sube y descarga código con comandos sencillos."
   },
   {
-    icon: <Users className="w-8 h-8 text-pink-400" />,
-    title: "Equips i Organitzacions",
-    description: "Gestiona permisos, rols i accessos amb granularitat per a equips de qualsevol mida."
+    icon: <Users className="w-6 h-6 text-pink-600" />,
+    title: "Equipos y Organizaciones",
+    description: "Gestiona permisos, roles y accesos con granularidad para equipos de cualquier tamaño."
   },
   {
-    icon: <Cpu className="w-8 h-8 text-cyan-400" />,
-    title: "DevOps Integrat",
-    description: "Pipelines de CI/CD configurables en minuts per testejar i desplegar el teu codi automàticament."
+    icon: <Cpu className="w-6 h-6 text-cyan-600" />,
+    title: "DevOps Integrado",
+    description: "Pipelines de CI/CD configurables en minutos para testear y desplegar tu código automáticamente."
   }
 ];
 
@@ -76,14 +76,14 @@ const Features = () => {
   }, []);
 
   return (
-    <section id="features" ref={sectionRef} className="py-24 bg-[#0d1117] relative">
-       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent opacity-50"></div>
+    <section id="features" ref={sectionRef} className="py-24 bg-white relative">
+       <div className="absolute top-0 left-0 w-full h-px bg-gray-100"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Tot el que necessites per crear</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Una suite completa d'eines dissenyada per potenciar la teva productivitat i la col·laboració del teu equip.
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Todo lo que necesitas para crear</h2>
+          <p className="text-gray-500 max-w-2xl mx-auto text-lg font-light">
+            Una suite completa de herramientas diseñada para potenciar tu productividad y la colaboración de tu equipo.
           </p>
         </div>
 
@@ -92,13 +92,13 @@ const Features = () => {
             <div
               key={index}
               ref={(el) => { cardsRef.current[index] = el; }}
-              className="p-6 rounded-2xl bg-[#161b22] border border-gray-800 hover:border-gray-600 transition-colors duration-300 group"
+              className="p-8 rounded-2xl bg-white border border-gray-100 hover:border-gray-300 hover:shadow-lg transition-all duration-300 group cursor-default"
             >
-              <div className="mb-4 bg-[#0d1117] w-14 h-14 rounded-lg flex items-center justify-center border border-gray-800 group-hover:scale-110 transition-transform duration-300">
+              <div className="mb-6 bg-gray-50 w-14 h-14 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-colors duration-300">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
+              <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
                 {feature.description}
               </p>
             </div>
