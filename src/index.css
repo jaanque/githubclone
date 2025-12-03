@@ -5,9 +5,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #0d1117; /* GitHub Dark Dimmed-ish */
+  color-scheme: light;
+  color: #1f2328; /* GitHub Light text */
+  background-color: #ffffff;
 }
 
 body {
