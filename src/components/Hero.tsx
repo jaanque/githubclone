@@ -1,4 +1,4 @@
-import { ArrowRight, Server, Zap, Shield } from 'lucide-react';
+import { ArrowRight, Box, Database, Globe, Zap, CheckCircle2 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
@@ -7,20 +7,20 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".hero-content > *", {
-        y: 30,
+      gsap.from(".hero-text > *", {
+        y: 20,
         opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out"
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out"
       });
 
       gsap.from(".hero-visual", {
-        x: 30,
+        y: 40,
         opacity: 0,
         duration: 1,
-        delay: 0.5,
-        ease: "power3.out"
+        delay: 0.3,
+        ease: "power2.out"
       });
     }, containerRef);
 
@@ -28,98 +28,117 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={containerRef} className="pt-32 pb-20 overflow-hidden">
+    <section ref={containerRef} className="pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden bg-white">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="lg:w-1/2 hero-content">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-              </span>
-              Nova Generació d'Infraestructura
-            </div>
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-6">
-              Infraestructura <span className="text-blue-500">Low-Code</span> per a Startups
-            </h1>
-            <p className="text-xl text-slate-400 mb-8 max-w-lg">
-              Construeix, desplega i escala la teva arquitectura al núvol en minuts. Sense complexitat, només rendiment.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="flex items-center justify-center gap-2 bg-white text-slate-950 px-8 py-3 rounded-full font-bold hover:bg-slate-200 transition-colors">
-                Comença gratuïtament <ArrowRight className="w-4 h-4" />
-              </button>
-              <button className="flex items-center justify-center gap-2 bg-slate-800 text-white px-8 py-3 rounded-full font-medium hover:bg-slate-700 transition-colors">
-                Veure documentació
-              </button>
-            </div>
-
-            <div className="mt-12 flex items-center gap-8 text-slate-500">
-              <div className="flex items-center gap-2">
-                <Server className="w-5 h-5" />
-                <span>Zero config</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="w-5 h-5" />
-                <span>Desplegament instantani</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                <span>Seguretat Enterprise</span>
-              </div>
-            </div>
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto hero-text mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-medium mb-8">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            v1.0 Ara disponible per a Startups
           </div>
 
-          <div className="lg:w-1/2 hero-visual relative">
-            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+          <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-slate-900 mb-6">
+            Infraestructura <span className="text-blue-600">Low-Code</span> per a desenvolupadors
+          </h1>
 
-            <div className="relative bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
-              <div className="flex items-center gap-2 mb-4 border-b border-slate-800 pb-4">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          <p className="text-xl text-slate-600 mb-10 max-w-2xl leading-relaxed">
+            Dissenya, desplega i escala la teva arquitectura al núvol amb la mateixa facilitat amb què dissenyes una interfície. Sense YAML, sense complexitat.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <button className="btn-primary flex items-center justify-center gap-2">
+              Començar de franc <ArrowRight className="w-4 h-4" />
+            </button>
+            <button className="btn-secondary">
+              Veure Demo
+            </button>
+          </div>
+
+          <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm text-slate-500 font-medium">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              <span>Desplegament en minuts</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              <span>AWS & Google Cloud</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              <span>Sense bloqueig de proveïdor</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Visual Canvas Representation */}
+        <div className="hero-visual relative mx-auto max-w-5xl">
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 h-full w-full pointer-events-none"></div>
+
+          <div className="bg-slate-50 rounded-xl border border-slate-200 shadow-2xl overflow-hidden aspect-[16/9] relative">
+            {/* Toolbar */}
+            <div className="h-12 border-b border-slate-200 bg-white flex items-center px-4 justify-between">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-slate-200"></div>
+                <div className="w-3 h-3 rounded-full bg-slate-200"></div>
               </div>
+              <div className="text-xs font-mono text-slate-400">origen-canvas-prod</div>
+              <div className="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded">Desat</div>
+            </div>
 
-              <div className="space-y-4 font-mono text-sm">
-                <div className="flex gap-4">
-                  <span className="text-slate-500">1</span>
-                  <span className="text-purple-400">resource</span> "aws_instance" "app" {'{'}
-                </div>
-                <div className="flex gap-4">
-                  <span className="text-slate-500">2</span>
-                  <span className="pl-4 text-slate-300">ami           = "ami-0c55b159cbfafe1f0"</span>
-                </div>
-                <div className="flex gap-4">
-                  <span className="text-slate-500">3</span>
-                  <span className="pl-4 text-slate-300">instance_type = "t2.micro"</span>
-                </div>
-                <div className="flex gap-4">
-                  <span className="text-slate-500">4</span>
-                  <span className="text-slate-300">{'}'}</span>
-                </div>
+            {/* Canvas Area */}
+            <div className="absolute inset-0 top-12 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+            <div className="absolute inset-0 top-12 flex items-center justify-center">
 
-                <div className="flex gap-4 pt-4">
-                  <span className="text-slate-500">5</span>
-                  <span className="text-green-400">origen deploy</span> <span className="text-slate-400">--env production</span>
-                </div>
-                <div className="flex gap-4">
-                  <span className="text-slate-500">6</span>
-                  <span className="text-blue-400">ℹ</span> <span className="text-slate-300">Optimitzant infraestructura...</span>
-                </div>
-                <div className="flex gap-4">
-                  <span className="text-slate-500">7</span>
-                  <span className="text-green-400">✔</span> <span className="text-slate-300">Desplegat a https://app.origen.io</span>
-                </div>
-              </div>
+              {/* Nodes and Connections SVG */}
+              <svg className="w-full h-full" viewBox="0 0 800 450">
+                <defs>
+                  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#000000" floodOpacity="0.05"/>
+                  </filter>
+                </defs>
 
-              {/* Illustration SVG overlay */}
-              <div className="absolute -right-8 -bottom-8 w-40 h-40">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-lg">
-                   <circle cx="100" cy="100" r="80" fill="#3b82f6" fillOpacity="0.2" />
-                   <path d="M60 100 L90 130 L140 70" fill="none" stroke="#3b82f6" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
+                {/* Connection Lines */}
+                <path d="M200,225 C300,225 300,150 400,150" fill="none" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="4 4" className="animate-pulse" />
+                <path d="M200,225 C300,225 300,300 400,300" fill="none" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="4 4" className="animate-pulse" />
+                <path d="M480,150 L580,225" fill="none" stroke="#cbd5e1" strokeWidth="2" />
+                <path d="M480,300 L580,225" fill="none" stroke="#cbd5e1" strokeWidth="2" />
+
+                {/* Node 1: Load Balancer */}
+                <g transform="translate(120, 185)" filter="url(#shadow)">
+                  <rect width="80" height="80" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="1" />
+                  <Globe className="text-blue-500" x="24" y="16" width="32" height="32" />
+                  <text x="40" y="65" textAnchor="middle" fontSize="10" fill="#64748b" fontFamily="sans-serif">Balancer</text>
+                </g>
+
+                {/* Node 2: App Server */}
+                <g transform="translate(400, 110)" filter="url(#shadow)">
+                  <rect width="80" height="80" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="1" />
+                  <Zap className="text-amber-500" x="24" y="16" width="32" height="32" />
+                  <text x="40" y="65" textAnchor="middle" fontSize="10" fill="#64748b" fontFamily="sans-serif">App Core</text>
+                </g>
+
+                {/* Node 3: Database */}
+                <g transform="translate(400, 260)" filter="url(#shadow)">
+                  <rect width="80" height="80" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="1" />
+                  <Database className="text-emerald-500" x="24" y="16" width="32" height="32" />
+                  <text x="40" y="65" textAnchor="middle" fontSize="10" fill="#64748b" fontFamily="sans-serif">Postgres</text>
+                </g>
+
+                {/* Node 4: Storage */}
+                <g transform="translate(580, 185)" filter="url(#shadow)">
+                  <rect width="80" height="80" rx="12" fill="white" stroke="#e2e8f0" strokeWidth="1" />
+                  <Box className="text-purple-500" x="24" y="16" width="32" height="32" />
+                  <text x="40" y="65" textAnchor="middle" fontSize="10" fill="#64748b" fontFamily="sans-serif">Assets</text>
+                </g>
+
+                {/* Floating "Add" Button UI */}
+                <g transform="translate(700, 50)">
+                   <rect width="40" height="40" rx="8" fill="#2563eb" />
+                   <path d="M20 12 V28 M12 20 H28" stroke="white" strokeWidth="2" />
+                </g>
+              </svg>
             </div>
           </div>
         </div>
