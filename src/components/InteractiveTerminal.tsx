@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Terminal } from 'lucide-react';
-import { gsap } from 'gsap';
 
 const InteractiveTerminal = () => {
   const [history, setHistory] = useState([
@@ -9,18 +8,10 @@ const InteractiveTerminal = () => {
   ]);
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [history]);
-
-  useEffect(() => {
-    gsap.fromTo(containerRef.current,
-      { opacity: 0, scale: 0.95 },
-      { opacity: 1, scale: 1, duration: 0.8, scrollTrigger: { trigger: containerRef.current, start: "top 85%" } }
-    );
-  }, []);
 
   const handleCommand = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -55,29 +46,29 @@ const InteractiveTerminal = () => {
   };
 
   return (
-    <section className="py-24 bg-white flex justify-center px-4">
-      <div className="max-w-4xl w-full">
-        <div className="text-center mb-10">
-            <span className="text-blue-600 font-mono text-sm tracking-wider uppercase mb-2 block font-semibold">Pruébalo tú mismo</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Interactividad real</h2>
-            <p className="text-gray-500 font-light">Experimenta la sencillez de nuestra línea de comandos. Escribe <code className="bg-gray-100 px-2 py-1 rounded text-gray-800 text-sm font-semibold border border-gray-200">push</code> para ver la magia.</p>
+    <section className="py-16 bg-white flex justify-center px-4 border-t border-gray-100">
+      <div className="max-w-3xl w-full">
+        <div className="text-center mb-8">
+            <span className="text-gray-900 font-mono text-xs tracking-wider uppercase mb-2 block font-bold">Pruébalo tú mismo</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Interactividad real</h2>
+            <p className="text-gray-500 font-light text-sm">Experimenta la sencillez. Escribe <code className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-800 text-xs font-semibold border border-gray-200">push</code>.</p>
         </div>
 
-        <div ref={containerRef} className="bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-gray-300 font-mono text-sm sm:text-base">
+        <div className="bg-[#1e1e1e] rounded-lg shadow-lg overflow-hidden border border-gray-200 font-mono text-xs sm:text-sm">
           <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-gray-700">
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
             </div>
-            <div className="ml-4 text-gray-400 text-xs flex items-center gap-1">
-              <Terminal size={12} /> bash — usuario@gitclone
+            <div className="ml-3 text-gray-400 text-[10px] flex items-center gap-1">
+              <Terminal size={10} /> bash — usuario@gitclone
             </div>
           </div>
 
-          <div className="p-6 h-[400px] overflow-y-auto text-gray-300 cursor-text" onClick={() => document.getElementById('terminal-input')?.focus()}>
+          <div className="p-4 h-[300px] overflow-y-auto text-gray-300 cursor-text" onClick={() => document.getElementById('terminal-input')?.focus()}>
             {history.map((entry, i) => (
-              <div key={i} className="mb-2 whitespace-pre-wrap">
+              <div key={i} className="mb-1 whitespace-pre-wrap">
                 {entry.type === 'input' ? (
                   <div className="flex">
                     <span className="text-green-400 mr-2">➜</span>
