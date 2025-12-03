@@ -3,6 +3,7 @@ import Hero from './components/Hero';
 import Features from './components/Features';
 import Footer from './components/Footer';
 import InteractiveWorkflow from './components/InteractiveWorkflow';
+import Integrations from './components/Integrations';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Header />
       <main>
         <Hero />
+        <Integrations />
         <InteractiveWorkflow />
         <Features />
 

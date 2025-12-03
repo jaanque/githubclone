@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Globe, Server, Settings, Zap, ArrowRight } from 'lucide-react';
+import { Globe, Server, Settings, Zap, ArrowRight, Database, Box } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,36 +31,63 @@ export default function InteractiveWorkflow() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const sections = gsap.utils.toArray('.workflow-step');
+      // Progress Line Animation
+      gsap.fromTo(".progress-line-fill",
+        { height: "0%" },
+        {
+          height: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".steps-container",
+            start: "top center",
+            end: "bottom center",
+            scrub: true
+          }
+        }
+      );
 
-      // Pin the right side while scrolling the left
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top+=100",
-        end: "bottom bottom-=100",
-        pin: ".visual-container",
-        pinSpacing: false, // Maintain layout
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top+=100",
+          end: "bottom bottom-=100",
+          pin: ".visual-container",
+          scrub: 1,
+        }
       });
 
-      // Animate specific elements in the visual container based on which step is in view
-      sections.forEach((section: any, index) => {
+      // --- Animation Timeline for Visuals ---
+
+      // Initial State (Step 1 is default)
+      // Transition to Step 2
+      timeline.to(".visual-scene", { scale: 1.5, x: -50, y: -20, duration: 1, ease: "power2.inOut" }, 0.5); // Zoom in
+      timeline.to(".config-panel", { x: 0, opacity: 1, duration: 1, ease: "power2.out" }, 0.8); // Show panel
+
+      // Transition to Step 3
+      timeline.to(".config-panel", { x: 50, opacity: 0, duration: 0.5 }, 2.0); // Hide panel
+      timeline.to(".visual-scene", { scale: 0.8, x: 0, y: 0, duration: 1, ease: "power2.inOut" }, 2.0); // Zoom out
+      timeline.to(".world-map", { opacity: 1, duration: 1 }, 2.2); // Show Map
+      timeline.to(".connection-line", { strokeDashoffset: 0, duration: 1, stagger: 0.2 }, 2.5); // Draw lines
+
+      // Step text highlighting
+      steps.forEach((step) => {
         ScrollTrigger.create({
-          trigger: section,
+          trigger: `#step-${step.id}`,
           start: "top center",
           end: "bottom center",
           onToggle: ({ isActive }) => {
-            if (isActive) {
-              gsap.to(`.visual-step-${index + 1}`, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" });
-              gsap.to(`.visual-step-${index + 1}-bg`, { opacity: 1, duration: 0.5 });
-
-              // Hide others
-              steps.forEach(s => {
-                if (s.id !== index + 1) {
-                  gsap.to(`.visual-step-${s.id}`, { opacity: 0, scale: 0.8, duration: 0.3 });
-                  gsap.to(`.visual-step-${s.id}-bg`, { opacity: 0, duration: 0.3 });
-                }
-              });
-            }
+            gsap.to(`#step-${step.id} .step-icon`, {
+              backgroundColor: isActive ? "#2563eb" : "#eff6ff",
+              color: isActive ? "#ffffff" : "#2563eb",
+              scale: isActive ? 1.1 : 1,
+              duration: 0.3
+            });
+            gsap.to(`#step-${step.id} .step-number`, {
+              backgroundColor: isActive ? "#2563eb" : "#ffffff",
+              color: isActive ? "#ffffff" : "#2563eb",
+              borderColor: isActive ? "#2563eb" : "#e2e8f0",
+              duration: 0.3
+            });
           }
         });
       });
@@ -83,24 +110,27 @@ export default function InteractiveWorkflow() {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 relative">
 
           {/* Left Column: Scrollable Text Steps */}
-          <div className="lg:w-1/2 flex flex-col gap-24 py-12 relative z-10">
-            <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-slate-200 hidden lg:block"></div>
+          <div className="lg:w-1/2 flex flex-col gap-32 py-24 relative z-10 steps-container">
+            {/* Vertical Progress Line */}
+            <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-slate-200 hidden lg:block">
+              <div className="progress-line-fill w-full bg-blue-600 h-0"></div>
+            </div>
 
             {steps.map((step) => (
-              <div key={step.id} className="workflow-step relative pl-12 lg:pl-16">
-                <div className="absolute left-0 lg:left-2 top-0 w-8 h-8 rounded-full bg-white border-2 border-blue-600 flex items-center justify-center font-bold text-blue-600 z-10 shadow-sm">
+              <div key={step.id} id={`step-${step.id}`} className="workflow-step relative pl-12 lg:pl-20">
+                <div className="step-number absolute left-0 lg:left-0 top-0 w-8 h-8 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center font-bold text-blue-600 z-10 transition-colors duration-300">
                   {step.id}
                 </div>
-                <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
-                  <div className="bg-blue-50 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600 mb-6">
+                <div className="relative">
+                  <div className="step-icon bg-blue-50 w-14 h-14 rounded-xl flex items-center justify-center text-blue-600 mb-6 transition-colors duration-300 shadow-sm">
                     {step.icon}
                   </div>
-                  <h4 className="text-2xl font-bold text-slate-900 mb-4">{step.title}</h4>
+                  <h4 className="text-3xl font-bold text-slate-900 mb-4">{step.title}</h4>
                   <p className="text-lg text-slate-600 leading-relaxed mb-6">
                     {step.description}
                   </p>
-                  <div className="flex items-center text-blue-600 font-medium group cursor-pointer">
-                    Saber-ne més <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center text-blue-600 font-medium group cursor-pointer text-lg">
+                    Saber-ne més <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </div>
@@ -108,72 +138,90 @@ export default function InteractiveWorkflow() {
           </div>
 
           {/* Right Column: Sticky Visuals */}
-          <div className="lg:w-1/2 relative lg:h-[600px]">
-            <div className="visual-container lg:absolute lg:top-0 lg:right-0 w-full h-[500px] lg:h-full bg-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-slate-800">
+          <div className="lg:w-1/2 relative lg:h-[800px] hidden lg:block">
+            <div className="visual-container lg:absolute lg:top-0 lg:right-0 w-full h-[600px] bg-slate-900 rounded-3xl shadow-2xl overflow-hidden border border-slate-800">
+
               {/* Background Grid */}
               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
               <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
 
-              {/* Step 1 Visual: Canvas & Nodes */}
-              <div className="visual-step-1 absolute inset-0 flex items-center justify-center opacity-1">
-                 <div className="relative w-full max-w-md aspect-video bg-slate-800/50 rounded-lg border border-slate-700 p-6 backdrop-blur-sm">
-                    <div className="absolute top-4 left-4 right-4 h-2 bg-slate-700 rounded-full w-1/3"></div>
-                    {/* Dragging Hand Animation Simulator */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full flex items-center justify-center gap-8">
-                       <div className="w-20 h-20 bg-blue-500/20 border border-blue-500 rounded-lg flex flex-col items-center justify-center text-blue-400">
-                         <Globe className="mb-2" /> <span className="text-xs">LB</span>
-                       </div>
-                       <div className="w-8 h-0.5 bg-slate-600"></div>
-                       <div className="w-20 h-20 bg-amber-500/20 border border-amber-500 rounded-lg flex flex-col items-center justify-center text-amber-400">
-                         <Server className="mb-2" /> <span className="text-xs">App</span>
-                       </div>
-                    </div>
-                    <div className="absolute bottom-4 right-4 bg-blue-600 text-white text-xs px-3 py-1 rounded">Canvas Actiu</div>
-                 </div>
+              {/* Unified Scene Container */}
+              <div className="absolute inset-0 flex items-center justify-center visual-scene origin-center">
+
+                {/* World Map Background (Hidden initially) */}
+                <div className="world-map absolute inset-0 opacity-0 pointer-events-none scale-150">
+                   {/* Simplified Map Dots */}
+                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/40 to-transparent"></div>
+                   <Globe className="w-96 h-96 text-slate-800/50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" strokeWidth={0.5} />
+                </div>
+
+                {/* Nodes Graph */}
+                <div className="relative w-[400px] h-[300px]">
+                   {/* Connections */}
+                   <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none">
+                      <path d="M100,150 L200,150" stroke="#475569" strokeWidth="2" />
+                      <path d="M200,150 L300,80" stroke="#475569" strokeWidth="2" />
+                      <path d="M200,150 L300,220" stroke="#475569" strokeWidth="2" />
+
+                      {/* Dynamic Global Connections (Step 3) */}
+                      <path className="connection-line" d="M300,80 C400,80 500,-50 600,-50" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="300" strokeDashoffset="300" />
+                      <path className="connection-line" d="M300,220 C400,220 500,350 600,350" fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="300" strokeDashoffset="300" />
+                   </svg>
+
+                   {/* Node: LB */}
+                   <div className="absolute top-1/2 left-[50px] -translate-y-1/2 -translate-x-1/2 w-20 h-20 bg-slate-800 border border-slate-600 rounded-xl flex items-center justify-center shadow-lg z-10">
+                      <Globe className="text-blue-400 w-8 h-8" />
+                      <div className="absolute -bottom-6 text-slate-400 text-xs font-mono">LB-01</div>
+                   </div>
+
+                   {/* Node: App Core (Target for Zoom) */}
+                   <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-24 h-24 bg-slate-800 border border-blue-500 rounded-xl flex items-center justify-center shadow-lg z-20 shadow-blue-500/20">
+                      <Server className="text-amber-400 w-10 h-10" />
+                      <div className="absolute -bottom-6 text-white text-xs font-mono bg-blue-600 px-2 py-0.5 rounded">App-Core</div>
+                   </div>
+
+                   {/* Node: DB */}
+                   <div className="absolute top-[80px] right-[50px] -translate-y-1/2 w-20 h-20 bg-slate-800 border border-slate-600 rounded-xl flex items-center justify-center shadow-lg z-10">
+                      <Database className="text-emerald-400 w-8 h-8" />
+                      <div className="absolute -bottom-6 text-slate-400 text-xs font-mono">DB-Pri</div>
+                   </div>
+
+                   {/* Node: Storage */}
+                   <div className="absolute bottom-[80px] right-[50px] translate-y-1/2 w-20 h-20 bg-slate-800 border border-slate-600 rounded-xl flex items-center justify-center shadow-lg z-10">
+                      <Box className="text-purple-400 w-8 h-8" />
+                      <div className="absolute -bottom-6 text-slate-400 text-xs font-mono">S3-Assets</div>
+                   </div>
+                </div>
+
               </div>
 
-              {/* Step 2 Visual: Config Panel */}
-              <div className="visual-step-2 absolute inset-0 flex items-center justify-center opacity-0 scale-90">
-                 <div className="relative w-full max-w-xs bg-white rounded-lg shadow-xl overflow-hidden border border-slate-200">
-                    <div className="bg-slate-50 border-b border-slate-200 p-3 flex justify-between items-center">
-                      <span className="text-xs font-bold text-slate-700">Configuració: App-Server-01</span>
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              {/* Config Panel (Overlay for Step 2) */}
+              <div className="config-panel absolute top-1/2 right-10 -translate-y-1/2 w-64 bg-slate-800/90 backdrop-blur-md border border-slate-600 rounded-xl p-5 shadow-2xl opacity-0 translate-x-10 z-30">
+                 <div className="flex items-center justify-between mb-4 border-b border-slate-700 pb-2">
+                    <span className="text-white font-mono text-sm">App-Core.conf</span>
+                    <Settings className="w-4 h-4 text-slate-400" />
+                 </div>
+                 <div className="space-y-3 font-mono text-xs">
+                    <div>
+                       <div className="text-slate-500 mb-1">instance_type</div>
+                       <div className="text-green-400">"t3.xlarge"</div>
                     </div>
-                    <div className="p-4 space-y-4">
-                      <div>
-                        <div className="text-xs text-slate-500 mb-1">Instance Type</div>
-                        <div className="w-full h-8 bg-slate-100 rounded border border-slate-200 px-2 flex items-center text-sm text-slate-700">t3.micro</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-slate-500 mb-1">Memory Limit</div>
-                        <div className="w-full h-1 bg-slate-200 rounded overflow-hidden">
-                           <div className="h-full w-3/4 bg-blue-500"></div>
-                        </div>
-                        <div className="text-right text-xs text-slate-400 mt-1">512MB / 1GB</div>
-                      </div>
-                      <div className="flex gap-2 pt-2">
-                        <div className="flex-1 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">Desar Canvis</div>
-                      </div>
+                    <div>
+                       <div className="text-slate-500 mb-1">replicas</div>
+                       <div className="flex gap-1">
+                          <span className="text-blue-400">3</span>
+                          <span className="text-slate-600"># Auto-scaling enabled</span>
+                       </div>
+                    </div>
+                    <div>
+                       <div className="text-slate-500 mb-1">env_vars</div>
+                       <div className="text-amber-400">["DB_HOST", "API_KEY"]</div>
                     </div>
                  </div>
-              </div>
-
-              {/* Step 3 Visual: Global Map */}
-              <div className="visual-step-3 absolute inset-0 flex items-center justify-center opacity-0 scale-90">
-                 <div className="relative w-full h-full flex items-center justify-center">
-                    <div className="absolute w-64 h-64 border border-blue-500/30 rounded-full animate-pulse"></div>
-                    <div className="absolute w-48 h-48 border border-blue-500/50 rounded-full"></div>
-                    <Globe className="w-24 h-24 text-blue-500" />
-
-                    {/* Satellites */}
-                    <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-emerald-400 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.8)]"></div>
-                    <div className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-purple-400 rounded-full shadow-[0_0_10px_rgba(167,139,250,0.8)]"></div>
-                    <div className="absolute top-1/2 right-10 w-3 h-3 bg-amber-400 rounded-full shadow-[0_0_10px_rgba(251,191,36,0.8)]"></div>
-
-                    <div className="absolute bottom-8 bg-slate-800/80 backdrop-blur text-white px-4 py-2 rounded-full border border-slate-700 text-sm flex items-center gap-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      Desplegat: us-east-1, eu-west-3
-                    </div>
+                 <div className="mt-4 pt-3 border-t border-slate-700 flex justify-end">
+                    <button className="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded transition-colors">
+                       Aplicar
+                    </button>
                  </div>
               </div>
 
