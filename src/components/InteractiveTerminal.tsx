@@ -8,8 +8,13 @@ const InteractiveTerminal = () => {
   ]);
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [history]);
 
@@ -46,27 +51,29 @@ const InteractiveTerminal = () => {
   };
 
   return (
-    <section className="py-16 bg-white flex justify-center px-4 border-t border-gray-100">
-      <div className="max-w-3xl w-full">
-        <div className="text-center mb-8">
-            <span className="text-gray-900 font-mono text-xs tracking-wider uppercase mb-2 block font-bold">Pruébalo tú mismo</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Interactividad real</h2>
-            <p className="text-gray-500 font-light text-sm">Experimenta la sencillez. Escribe <code className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-800 text-xs font-semibold border border-gray-200">push</code>.</p>
+    <section className="py-12 bg-gray-50 flex justify-center px-4 border-t border-gray-200">
+      <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="text-left">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Interactividad real</h2>
+            <p className="text-gray-600 font-light text-sm leading-relaxed mb-4">
+              La potencia de la línea de comandos, simplificada para ti.
+              Prueba escribiendo <code className="bg-white px-1.5 py-0.5 rounded text-black text-xs font-bold border border-gray-300">push</code>.
+            </p>
         </div>
 
-        <div className="bg-[#1e1e1e] rounded-lg shadow-lg overflow-hidden border border-gray-200 font-mono text-xs sm:text-sm">
-          <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-gray-700">
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+        <div className="bg-[#1e1e1e] rounded-lg shadow-md overflow-hidden border border-gray-300 font-mono text-xs">
+          <div className="bg-[#2d2d2d] px-3 py-1.5 flex items-center gap-2 border-b border-gray-700">
+            <div className="flex gap-1">
+              <div className="w-2 h-2 rounded-full bg-red-500"></div>
+              <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+              <div className="w-2 h-2 rounded-full bg-green-500"></div>
             </div>
-            <div className="ml-3 text-gray-400 text-[10px] flex items-center gap-1">
-              <Terminal size={10} /> bash — usuario@gitclone
+            <div className="ml-2 text-gray-400 text-[10px] flex items-center gap-1">
+              <Terminal size={10} /> bash
             </div>
           </div>
 
-          <div className="p-4 h-[300px] overflow-y-auto text-gray-300 cursor-text" onClick={() => document.getElementById('terminal-input')?.focus()}>
+          <div className="p-3 h-[200px] overflow-y-auto text-gray-300 cursor-text" onClick={() => document.getElementById('terminal-input')?.focus()}>
             {history.map((entry, i) => (
               <div key={i} className="mb-1 whitespace-pre-wrap">
                 {entry.type === 'input' ? (

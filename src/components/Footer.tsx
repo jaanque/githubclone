@@ -2,56 +2,29 @@ import { Github, Twitter, Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t border-gray-100 pt-12 pb-8">
+    <footer className="bg-white border-t border-gray-200 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
-          <div className="col-span-2 lg:col-span-2">
-            <div className="flex items-center mb-4 cursor-pointer">
-              <Github className="h-6 w-6 text-black" />
-              <span className="ml-2 text-lg font-bold text-black tracking-tight">GitClone</span>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center cursor-pointer">
+              <Github className="h-5 w-5 text-black" />
+              <span className="ml-2 text-base font-bold text-black tracking-tight">GitClone</span>
             </div>
-            <p className="text-gray-500 max-w-sm text-xs leading-relaxed">
-              La plataforma líder para el desarrollo de software colaborativo.
-              Seguridad, velocidad e innovación.
+            <span className="text-gray-300">|</span>
+            <p className="text-gray-500 text-xs">
+              © 2024 GitClone, Inc.
             </p>
           </div>
 
-          <div>
-            <h4 className="text-gray-900 font-bold mb-3 text-sm">Producto</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Características</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Seguridad</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Equipos</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Empresas</a></li>
-            </ul>
+          <div className="flex gap-6 text-xs text-gray-500">
+            <a href="#" className="hover:text-black transition-colors cursor-pointer">Términos</a>
+            <a href="#" className="hover:text-black transition-colors cursor-pointer">Privacidad</a>
+            <a href="#" className="hover:text-black transition-colors cursor-pointer">Seguridad</a>
+            <a href="#" className="hover:text-black transition-colors cursor-pointer">Estado</a>
+            <a href="#" className="hover:text-black transition-colors cursor-pointer">Contacto</a>
           </div>
 
-          <div>
-            <h4 className="text-gray-900 font-bold mb-3 text-sm">Plataforma</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">API</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Partners</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Electron</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Desktop</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-gray-900 font-bold mb-3 text-sm">Soporte</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Documentación</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Comunidad</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Servicios</a></li>
-              <li><a href="#" className="text-gray-500 hover:text-black transition-colors cursor-pointer text-xs">Estado</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-xs mb-4 md:mb-0">
-            © 2024 GitClone, Inc.
-          </p>
-          <div className="flex space-x-6">
+          <div className="flex space-x-4">
             <a href="#" className="text-gray-400 hover:text-black transition-colors cursor-pointer">
               <Twitter className="h-4 w-4" />
             </a>

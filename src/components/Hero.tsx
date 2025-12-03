@@ -2,52 +2,62 @@ import { Code, Zap, Globe, ArrowRight } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <div className="relative pt-24 pb-12 bg-white overflow-hidden">
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-gray-900 mb-6">
-          Construye software <br />
-          <span className="text-gray-900">
-            junto con el mundo.
-          </span>
-        </h1>
+    <div className="relative pt-12 pb-12 bg-white overflow-hidden border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Left Column: Text */}
+          <div className="text-left">
+            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+              Construye software <br />
+              <span className="text-gray-900">
+                junto con el mundo.
+              </span>
+            </h1>
 
-        <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto mb-8 leading-relaxed font-light">
-          GitClone es la plataforma de desarrollo completa para alojar y revisar código,
-          gestionar proyectos y crear software con millones de desarrolladores.
-        </p>
+            <p className="text-base text-gray-500 mb-6 leading-relaxed font-light max-w-lg">
+              GitClone es la plataforma completa para alojar código, gestionar proyectos y colaborar con millones de desarrolladores.
+            </p>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-3">
-          <button className="bg-black text-white px-6 py-2.5 rounded-md font-medium text-sm hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 cursor-pointer">
-            Empieza ahora <ArrowRight className="w-4 h-4" />
-          </button>
-          <button className="bg-white border border-gray-200 text-gray-700 px-6 py-2.5 rounded-md font-medium text-sm hover:border-gray-400 hover:text-black transition-colors cursor-pointer">
-            Contactar ventas
-          </button>
-        </div>
-
-        {/* Visual Element / Grid */}
-        <div className="mt-16 relative mx-auto max-w-4xl border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm">
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-100">
-            <div className="p-8 flex flex-col items-center">
-              <div className="p-2 bg-gray-50 rounded-lg mb-3">
-                <Code className="w-5 h-5 text-gray-700" />
-              </div>
-              <h3 className="text-base font-bold text-gray-900 mb-1">Código Seguro</h3>
-              <p className="text-gray-500 text-xs leading-relaxed max-w-[200px]">Repositorios privados y públicos con seguridad avanzada integrada.</p>
+            <div className="flex flex-row gap-3">
+              <button className="bg-black text-white px-5 py-2 rounded-md font-medium text-sm hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                Empieza ahora <ArrowRight className="w-4 h-4" />
+              </button>
+              <button className="bg-white border border-gray-200 text-gray-700 px-5 py-2 rounded-md font-medium text-sm hover:border-gray-400 hover:text-black transition-colors cursor-pointer">
+                Contactar ventas
+              </button>
             </div>
-            <div className="p-8 flex flex-col items-center">
-              <div className="p-2 bg-gray-50 rounded-lg mb-3">
-                <Zap className="w-5 h-5 text-gray-700" />
-              </div>
-              <h3 className="text-base font-bold text-gray-900 mb-1">CI/CD Rápido</h3>
-              <p className="text-gray-500 text-xs leading-relaxed max-w-[200px]">Automatiza tus flujos de trabajo directamente desde el repositorio.</p>
-            </div>
-            <div className="p-8 flex flex-col items-center">
-              <div className="p-2 bg-gray-50 rounded-lg mb-3">
-                <Globe className="w-5 h-5 text-gray-700" />
-              </div>
-              <h3 className="text-base font-bold text-gray-900 mb-1">Colaboración Global</h3>
-              <p className="text-gray-500 text-xs leading-relaxed max-w-[200px]">Conecta con equipos de todo el mundo sin fricción.</p>
+          </div>
+
+          {/* Right Column: Compact Grid Visual */}
+          <div className="relative">
+            <div className="grid grid-cols-1 gap-4">
+               <div className="p-5 flex items-start gap-4 rounded-lg border border-gray-100 bg-gray-50/50">
+                  <div className="p-2 bg-white border border-gray-200 rounded-md shadow-sm">
+                    <Code className="w-5 h-5 text-black" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900">Código Seguro</h3>
+                    <p className="text-gray-500 text-xs mt-1">Repositorios privados y públicos con seguridad integrada.</p>
+                  </div>
+               </div>
+               <div className="p-5 flex items-start gap-4 rounded-lg border border-gray-100 bg-gray-50/50">
+                  <div className="p-2 bg-white border border-gray-200 rounded-md shadow-sm">
+                    <Zap className="w-5 h-5 text-black" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900">CI/CD Rápido</h3>
+                    <p className="text-gray-500 text-xs mt-1">Automatiza flujos de trabajo desde el repositorio.</p>
+                  </div>
+               </div>
+               <div className="p-5 flex items-start gap-4 rounded-lg border border-gray-100 bg-gray-50/50">
+                  <div className="p-2 bg-white border border-gray-200 rounded-md shadow-sm">
+                    <Globe className="w-5 h-5 text-black" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900">Colaboración Global</h3>
+                    <p className="text-gray-500 text-xs mt-1">Conecta con equipos de todo el mundo sin fricción.</p>
+                  </div>
+               </div>
             </div>
           </div>
         </div>
